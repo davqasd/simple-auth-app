@@ -13,6 +13,10 @@ gem 'sass-rails', '>= 6'
 
 gem 'bootsnap', '>= 1.4.4', require: false
 
+# Auth
+gem 'bcrypt'
+gem 'warden'
+
 # API
 gem 'jsonapi-serializer'
 gem 'kaminari'
@@ -22,6 +26,11 @@ gem 'ransack'
 gem 'bootstrap', '~> 5.1'
 gem 'react-rails'
 gem 'webpacker', '~> 5.0'
+
+# Patterns
+gem 'active_interaction', '~> 4.0'
+
+# Other
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -41,6 +50,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'warden-rspec-rails'
   gem 'webmock'
 end
 

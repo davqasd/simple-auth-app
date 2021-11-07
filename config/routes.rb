@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   root 'static#index'
 
   namespace :api, constraints: { format: 'json' } do
-    namespace :v1 do
-      # TODO
-    end
+    resource :sessions, only: %i[new create destroy]
   end
 
   get '*page', to: 'static#index', constraints: lambda { |req|

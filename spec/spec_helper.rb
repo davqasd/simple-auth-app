@@ -54,6 +54,8 @@ RSpec.configure do |config|
     end
   end
   config.backtrace_inclusion_patterns = [/app|spec/]
+
+  config.include ApiHelper, type: :controller
 end
 
 Shoulda::Matchers.configure do |config|
