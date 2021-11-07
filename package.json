@@ -1,0 +1,30 @@
+{
+  "name": "simple-auth-app",
+  "private": true,
+  "dependencies": {
+    "@babel/preset-react": "^7.16.0",
+    "@rails/activestorage": "^6.0.0",
+    "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "5.4.3",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "eslint": "^8.2.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "eslint-plugin-react": "^7.26.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react_ujs": "^2.6.1",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "./bin/webpack --watch --progress"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3"
+  }
+}
