@@ -7,7 +7,7 @@ module Users
     string :password_confirmation
 
     validates :password, presence: true, length: { minimum: 8 }
-    # TODO: validate password == password_confirmation
+    validate :check_passwords
 
     def execute
       validate!
@@ -29,6 +29,12 @@ module Users
       inputs.
         except(:password, :password_confirmation).
         merge(encrypted_password: encrypt_password)
+    end
+
+    def check_passwords
+      return if password == password_confirmation
+
+      errors.add(:password, 'must be equal password confirmation')
     end
   end
 end

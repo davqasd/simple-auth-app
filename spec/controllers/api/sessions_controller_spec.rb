@@ -6,29 +6,23 @@ RSpec.describe Api::SessionsController, type: :controller do
   let(:user) { generate_user(password) }
 
   describe '#create' do
-    subject { post :create, params: params }
+    before { post :create, params: params }
 
     context 'when user is not signed in' do
       let(:params) { { email: user.email, password: password } }
 
       it 'returns token' do
-        subject
         expect(body[:token]).to be_present
+        expect(body[:token].is_a?(String)).to be_truthy
       end
     end
-  end
 
-  describe '#logout' do
-    subject { delete :destroy }
+    context 'invalid password' do
+      let(:params) { { email: user.email, password: 'invalid password' } }
 
-    context 'when user is signed in' do
-      before do
-        sign_in user
-      end
-
-      it 'successful' do
+      it 'returns token' do
         subject
-        expect(response.successful?).to be_truthy
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

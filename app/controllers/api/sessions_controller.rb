@@ -1,22 +1,14 @@
 # frozen_string_literal: true
 
 module Api
-  class SessionsController < ApplicationController
-    def new
-      render json: { error: 'Access Denied' }, status: :unprocessable_entity
-    end
+  class SessionsController < BaseController
+    skip_before_action :authenticate_user!
 
     def create
-      warden.authenticate(:password)
+      warden.authenticate(:api_password)
       return render json: { error: 'Invalid email/password' }, status: :unauthorized unless warden.authenticated?
 
       render_token
-    end
-
-    def destroy
-      warden.logout
-
-      render json: { message: 'Successfully signed out!' }
     end
 
     private

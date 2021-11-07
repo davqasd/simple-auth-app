@@ -15,6 +15,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # Auth
 gem 'bcrypt'
+gem 'jwt'
 gem 'warden'
 
 # API

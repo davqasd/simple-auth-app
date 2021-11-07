@@ -6,10 +6,14 @@ module Api
 
     include ErrorHandling
 
-    respond_to :json
+    before_action :authenticate_user!
 
     def json_response(data)
       render json: data
+    end
+
+    def authenticate_user!
+      warden.authenticate!(:jwt)
     end
   end
 end
