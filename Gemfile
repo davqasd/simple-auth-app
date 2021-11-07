@@ -19,6 +19,7 @@ gem 'kaminari'
 gem 'ransack'
 
 # Front
+gem 'bootstrap', '~> 5.1'
 gem 'react-rails'
 gem 'webpacker', '~> 5.0'
 

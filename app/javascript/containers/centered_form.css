@@ -1,0 +1,13 @@
+@media all and (min-width: 480px) {
+  .centered-form {
+    padding: 60px 0;
+  }
+
+  .centered-form form {
+    margin: 0 auto;
+    max-width: 420px;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    padding: 3em;
+  }
+}
