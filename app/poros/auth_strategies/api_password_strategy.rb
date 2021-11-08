@@ -12,5 +12,11 @@ module AuthStrategies
 
       fail! 'Invalid email or password'
     end
+
+    def params
+      @params ||= JSON.parse(request.body.read)
+    rescue JSON::ParserError
+      {}
+    end
   end
 end

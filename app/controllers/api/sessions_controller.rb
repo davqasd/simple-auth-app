@@ -8,18 +8,7 @@ module Api
       warden.authenticate(:api_password)
       return render json: { error: 'Invalid email/password' }, status: :unauthorized unless warden.authenticated?
 
-      render_token
-    end
-
-    private
-
-    def render_token
-      payload = {
-        token: session['warden.user.default.key'],
-        expires_at: nil
-      }
-
-      render(json: payload)
+      render json: { token: session['warden.user.default.key'] }
     end
   end
 end

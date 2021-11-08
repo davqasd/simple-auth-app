@@ -6,7 +6,7 @@ module Users
     string :password
     string :password_confirmation
 
-    validates :password, presence: true, length: { minimum: 8 }
+    validates :password, presence: true, length: { minimum: 3 }
     validate :check_passwords
 
     def execute

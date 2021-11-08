@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import cookie from 'react-cookies'
+import { API } from '../utils/api'
+
 import './centered_form.css'
 
 export default function TokenVerification () {
-  const [token, setToken] = useState('')
+  const token = cookie.load('Authorization')
 
   function redirectToLogin () {
     location.href = '/login'
@@ -18,6 +21,15 @@ export default function TokenVerification () {
 
   function handleSubmit (event) {
     event.preventDefault()
+
+    API.users.my().then(response => {
+      if (response.status === 200) {
+        console.log(response.data)
+        window.flash(JSON.stringify(response.data), 'success')
+      } else { window.flash('Something went wrong', 'error') }
+    }).catch(error => {
+      if (error.response.status === 401) { window.flash('Invalid token!', 'error') }
+    })
   }
 
   return (
@@ -28,11 +40,10 @@ export default function TokenVerification () {
           <Form.Control
             disabled
             value={token}
-            onChange={(e) => setToken(e.target.value)}
           />
         </Form.Group>
         <Button variant="primary" type="submit" disabled={!validateForm()}>
-          Verify!
+          Show my profile!
         </Button>
       </Form>
     </div>
