@@ -10,4 +10,8 @@
     border-radius: 1em;
     padding: 3em;
   }
+
+  .centered-form button {
+    margin-right: 1em;
+  }
 }

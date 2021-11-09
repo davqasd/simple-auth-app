@@ -1,22 +1,31 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import cookie from 'react-cookies'
+import Cookies from 'js-cookie'
 import { API } from '../utils/api'
 
 import './centered_form.css'
 
 export default function TokenVerification () {
-  const token = cookie.load('Authorization')
+  function getToken () {
+    return Cookies.get('Authorization')
+  }
+
+  checkToken()
 
   function redirectToLogin () {
     location.href = '/login'
   }
 
-  function validateForm () {
-    if (token) { return true }
+  function checkToken () {
+    if (getToken()) { return true }
 
     redirectToLogin()
+  }
+
+  function removeToken () {
+    Cookies.remove('Authorization')
+    checkToken()
   }
 
   function handleSubmit (event) {
@@ -39,11 +48,14 @@ export default function TokenVerification () {
           <Form.Label>JWT Token</Form.Label>
           <Form.Control
             disabled
-            value={token}
+            value={getToken()}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={!validateForm()}>
+        <Button variant="primary" type="submit">
           Show my profile!
+        </Button>
+        <Button variant="primary" onClick={removeToken}>
+          Sign out!
         </Button>
       </Form>
     </div>

@@ -14,9 +14,13 @@ module AuthStrategies
     end
 
     def params
-      @params ||= JSON.parse(request.body.read)
+      @params ||= params_from_body || request.params
+    end
+
+    def params_from_body
+      JSON.parse(request.body.read)
     rescue JSON::ParserError
-      {}
+      nil
     end
   end
 end

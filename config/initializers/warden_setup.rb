@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Dir.glob(Rails.root.join('app/poros/auth_strategies/*.rb')).sort.each { |file| require file }
+
 Rails.application.config.middleware.insert_after ActionDispatch::Session::CookieStore, Warden::Manager do |manager|
   manager.default_strategies :api_password
   manager.failure_app = ->(env) { Api::UnauthorizedController.action(:index).call(env) }
