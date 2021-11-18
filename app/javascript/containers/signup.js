@@ -9,6 +9,7 @@ import './centered_form.css'
 export default function Login () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
 
   function getToken () {
     return Cookies.get('Authorization')
@@ -22,7 +23,7 @@ export default function Login () {
     location.href = '/'
   }
 
-  function signIn (token) {
+  function signUp (token) {
     Cookies.set('Authorization', token)
     window.flash('Successfully signed in!', 'success')
     renderRootPage()
@@ -31,12 +32,20 @@ export default function Login () {
   function handleSubmit (event) {
     event.preventDefault()
 
-    const payload = { email, password }
+    const payload = { email: email, password: password, password_confirmation: passwordConfirmation }
 
-    API.sessions.create(payload).then(response => {
-      if (response.status === 200) { signIn(response.data.token) } else { window.flash('Something went wrong', 'error') }
+    API.sessions.signup(payload).then(response => {
+      if (response.status === 200) {
+        signUp(response.data.token)
+      } else {
+        window.flash('Something went wrong', 'error')
+      }
     }).catch(error => {
-      if (error.response.status === 401) { window.flash('Invalid email/password', 'error') }
+      if (error.response.status === 403) {
+        error.response.data.forEach(message => {
+          window.flash(message, 'error')
+        })
+      }
     })
   }
 
@@ -66,11 +75,20 @@ export default function Login () {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+        <Form.Group className="mb-3" controlId="password-confirmation">
+          <Form.Label>Password confirmation</Form.Label>
+          <Form.Control
+            type="password"
+            value={passwordConfirmation}
+            autoComplete='password confirmation'
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
+          />
+        </Form.Group>
         <Button variant="primary" type="submit" disabled={!validateForm()}>
-          Login
-        </Button>
-        <a href="/signup">
           Sign up
+        </Button>
+        <a href="/login">
+          Sign in!
         </a>
       </Form>
     </div>

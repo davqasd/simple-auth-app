@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   root 'static#index'
 
   namespace :api, constraints: { format: 'json' } do
-    resource :sessions, only: %i[create]
+    resource :sessions, only: %i[create] do
+      collection do
+        post :signup
+      end
+    end
     resources :users, only: [] do
       collection do
         get :my

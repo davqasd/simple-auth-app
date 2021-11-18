@@ -13,6 +13,7 @@ module Api
     end
 
     def authenticate_user!
+      warden.logout # sign out from previous session
       warden.authenticate!(:jwt)
     end
   end

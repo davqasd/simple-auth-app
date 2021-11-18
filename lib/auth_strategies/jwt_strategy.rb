@@ -3,7 +3,11 @@
 module AuthStrategies
   class JwtStrategy < ::Warden::Strategies::Base
     def valid?
-      request.fetch_header('HTTP_AUTHORIZATION')
+      !token.nil?
+    end
+
+    def store?
+      false
     end
 
     def authenticate!
@@ -12,12 +16,17 @@ module AuthStrategies
       # then fail auth and ask user to login. In this case, it's equal to functionality where we assign user
       # to his device and location. Even if hacker steals cookies, he can't use JWT due to
       # possibly different location or different device.
-      token = request.fetch_header('HTTP_AUTHORIZATION')
       interaction = Users::JwtAuthenticate.run(token: token)
 
       return success!(interaction.result) if interaction.valid?
 
       fail! 'bad token!'
+    end
+
+    private
+
+    def token
+      @token ||= request.fetch_header('HTTP_AUTHORIZATION')
     end
   end
 end

@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet'
 
 import { Flash } from './flash'
 import Login from '../containers/login'
+import Signup from '../containers/signup'
 import TokenVerification from '../containers/token_verification'
 
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Routes>
             <Route exact path="/" element={<TokenVerification />} />
             <Route exact path="/login" element={<Login />} />
+            <Route exact path="/signup" element={<Signup />} />
           </Routes>
         </BrowserRouter>
       </>

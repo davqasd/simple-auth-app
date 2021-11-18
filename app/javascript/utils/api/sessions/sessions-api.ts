@@ -11,4 +11,12 @@ export class API {
       payload: payload
     });
   }
+
+  public static signup(payload): Promise<AxiosResponse> {
+    return httpRequest({
+      url: 'sessions/signup',
+      method: RequestMethod.POST,
+      payload: payload
+    });
+  }
 }

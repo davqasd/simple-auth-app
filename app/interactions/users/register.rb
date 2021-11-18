@@ -9,10 +9,14 @@ module Users
     validates :password, presence: true, length: { minimum: 3 }
     validate :check_passwords
 
+    attr_reader :user
+
     def execute
       validate!
       encrypt_password
       save_user
+      errors.add(:base, user.errors.full_messages) if user.invalid?
+      user
     end
 
     private
