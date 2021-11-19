@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+cli_help() {
+  echo "
+Scopmler CLI
+Version: 0.1.0
+Usage: ./bin/cli [command]
+Commands:
+  start
+  stop
+"
+  exit 1
+}
+
+case "$1" in
+  start|d)
+    docker-compose up --detach
+    ;;
+  stop|d)
+    docker-compose stop
+    ;;
+  *)
+    cli_help
+    ;;
+esac

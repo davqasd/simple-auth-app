@@ -17,6 +17,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'bcrypt'
 gem 'jwt'
 gem 'warden'
+gem 'omniauth-github', github: 'omniauth/omniauth-github', branch: 'master'
 
 # API
 gem 'jsonapi-serializer'

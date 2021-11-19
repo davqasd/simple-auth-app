@@ -1,6 +1,9 @@
 .rbenv-vars
 .byebug_history
 
+/docker-compose.yml
+certs
+
 # Ignore bundler config.
 /.bundle
 

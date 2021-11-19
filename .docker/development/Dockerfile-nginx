@@ -1,0 +1,42 @@
+FROM nginx:1.21.1
+
+# install essential Linux packages
+RUN apt-get update -qq && apt-get -y install apache2-utils curl \
+  build-essential procps curl file git
+
+# install Homebrew and mkcert
+RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew \
+  && mkdir ~/.linuxbrew/bin \
+  && ln -s ../Homebrew/bin/brew ~/.linuxbrew/bin \
+  && eval $(~/.linuxbrew/bin/brew shellenv) \
+  && brew install mkcert
+
+# where we store everything SSL-related
+ENV SSL_ROOT /var/www/ssl
+# CA store for mkcert
+ENV CAROOT $SSL_ROOT
+
+# where Nginx looks for SSL files
+ENV SSL_CERT_HOME $SSL_ROOT/certs/live
+
+# copy over the script that is run by the container
+COPY .docker/development/web_cmd.sh /tmp/
+
+# establish where Nginx should look for files
+ENV APP_PATH /app
+
+# Set our working directory inside the image
+WORKDIR $APP_PATH
+
+# create log directory
+RUN mkdir log
+
+# copy over static assets
+COPY public public/
+
+# copy our Nginx config template
+COPY .docker/development/nginx.conf /tmp/docker_example.nginx
+
+RUN envsubst '$APP_PATH:$SSL_ROOT:$SSL_CERT_HOME' < /tmp/docker_example.nginx > /etc/nginx/nginx.conf
+
+CMD [ "/tmp/web_cmd.sh" ]
