@@ -12,15 +12,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_107_120_006) do
+ActiveRecord::Schema.define(version: 20_211_122_200_507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
+  create_table 'auth_providers', force: :cascade do |t|
+    t.string 'provider', null: false
+    t.string 'uid', null: false
+    t.string 'token'
+    t.bigint 'user_id', null: false
+    t.jsonb 'data'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[uid provider], name: 'index_auth_providers_on_uid_and_provider', unique: true
+    t.index ['user_id'], name: 'index_auth_providers_on_user_id'
+  end
+
   create_table 'users', force: :cascade do |t|
-    t.string 'email', null: false
+    t.string 'email'
     t.string 'encrypted_password'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['email'], name: 'index_users_on_email', unique: true, where: '(email IS NOT NULL)'
   end
+
+  add_foreign_key 'auth_providers', 'users'
 end

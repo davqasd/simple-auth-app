@@ -2,12 +2,30 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Cookies from 'js-cookie'
+import { useLocation } from 'react-router-dom'
 import { API } from '../utils/api'
 
 import './centered_form.css'
 
+function useQuery () {
+  return new URLSearchParams(useLocation().search)
+}
+
 export default function TokenVerification () {
+  function setToken (token) {
+    Cookies.set('Authorization', token)
+    if (Cookies.get('Authorization')) { window.location = window.location.href.split('?')[0] }
+  }
+
   function getToken () {
+    const token = useQuery().get('token')
+
+    if (token) {
+      setToken(token)
+
+      return token
+    }
+
     return Cookies.get('Authorization')
   }
 
@@ -25,7 +43,7 @@ export default function TokenVerification () {
 
   function removeToken () {
     Cookies.remove('Authorization')
-    checkToken()
+    redirectToLogin()
   }
 
   function handleSubmit (event) {

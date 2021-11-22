@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   root 'static#index'
 
+  get 'auth/github/callback', to: 'oauth/github#create'
+  get 'auth/github/redirect', to: 'oauth/github#redirect_to_authorize'
+
   namespace :api, constraints: { format: 'json' } do
     resource :sessions, only: %i[create] do
       collection do

@@ -69,9 +69,16 @@ export default function Login () {
         <Button variant="primary" type="submit" disabled={!validateForm()}>
           Login
         </Button>
-        <a href="/signup">
-          Sign up
-        </a>
+        <div>
+          <a href="/signup">
+            Sign up
+          </a>
+        </div>
+        <div>
+          <a href="/auth/github/redirect">
+            Github
+          </a>
+        </div>
       </Form>
     </div>
   )
