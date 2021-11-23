@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import { API } from '../utils/api'
-import Cookies from 'js-cookie'
+import { signIn } from 'helpers/auth'
 
 import './centered_form.css'
 
@@ -10,22 +10,8 @@ export default function Login () {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  function getToken () {
-    return Cookies.get('Authorization')
-  }
-
   function validateForm () {
     return email.length > 0 && password.length > 0
-  }
-
-  function renderRootPage () {
-    location.href = '/'
-  }
-
-  function signIn (token) {
-    Cookies.set('Authorization', token)
-    window.flash('Successfully signed in!', 'success')
-    renderRootPage()
   }
 
   function handleSubmit (event) {
@@ -38,11 +24,6 @@ export default function Login () {
     }).catch(error => {
       if (error.response.status === 401) { window.flash('Invalid email/password', 'error') }
     })
-  }
-
-  if (getToken()) {
-    window.flash('You are already signed in!', 'success')
-    renderRootPage()
   }
 
   return (

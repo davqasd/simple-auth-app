@@ -1,51 +1,14 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Cookies from 'js-cookie'
-import { useLocation } from 'react-router-dom'
+import SignOutBtn from 'components/sign_out'
 import { API } from '../utils/api'
+
+import { getToken } from 'helpers/token'
 
 import './centered_form.css'
 
-function useQuery () {
-  return new URLSearchParams(useLocation().search)
-}
-
 export default function TokenVerification () {
-  function setToken (token) {
-    Cookies.set('Authorization', token)
-    if (Cookies.get('Authorization')) { window.location = window.location.href.split('?')[0] }
-  }
-
-  function getToken () {
-    const token = useQuery().get('token')
-
-    if (token) {
-      setToken(token)
-
-      return token
-    }
-
-    return Cookies.get('Authorization')
-  }
-
-  checkToken()
-
-  function redirectToLogin () {
-    location.href = '/login'
-  }
-
-  function checkToken () {
-    if (getToken()) { return true }
-
-    redirectToLogin()
-  }
-
-  function removeToken () {
-    Cookies.remove('Authorization')
-    redirectToLogin()
-  }
-
   function handleSubmit (event) {
     event.preventDefault()
 
@@ -72,9 +35,7 @@ export default function TokenVerification () {
         <Button variant="primary" type="submit">
           Show my profile!
         </Button>
-        <Button variant="primary" onClick={removeToken}>
-          Sign out!
-        </Button>
+        <SignOutBtn />
       </Form>
     </div>
   )
