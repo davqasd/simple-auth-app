@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import { Form, InputGroup, Button, Card } from 'react-bootstrap'
+
+import FaIcon from 'components/fa-icon'
 import { API } from '../utils/api'
 import { signIn } from 'helpers/auth'
 
@@ -36,42 +37,67 @@ export default function Login () {
   }
 
   return (
-    <div className="centered-form">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            autoComplete='password'
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="password-confirmation">
-          <Form.Label>Password confirmation</Form.Label>
-          <Form.Control
-            type="password"
-            value={passwordConfirmation}
-            autoComplete='password confirmation'
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit" disabled={!validateForm()}>
-          Sign up
-        </Button>
-        <a href="/login">
-          Sign in!
-        </a>
-      </Form>
+    <div className="container">
+      <div className="d-flex justify-content-center h-100">
+        <Card>
+          <Card.Header>
+            <h3>Sign Up</h3>
+          </Card.Header>
+          <Card.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="email">
+                <InputGroup>
+                  <InputGroup.Text id="inputPrependEmail"><FaIcon icon="user"/></InputGroup.Text>
+                  <Form.Control
+                    autoFocus
+                    type="email"
+                    placeholder="email"
+                    aria-describedby="inputPrependEmail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="password">
+                <InputGroup>
+                  <InputGroup.Text id="inputPrependPassword"><FaIcon icon="key"/></InputGroup.Text>
+                  <Form.Control
+                    type="password"
+                    placeholder="password"
+                    aria-describedby="inputPrependPassword"
+                    value={password}
+                    autoComplete='password'
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="password-confirmation">
+                <InputGroup>
+                  <InputGroup.Text id="inputPrependPasswordConfirmation"><FaIcon icon="key"/></InputGroup.Text>
+                  <Form.Control
+                    type="password"
+                    placeholder="password confirmation"
+                    aria-describedby="inputPrependPasswordConfirmation"
+                    value={passwordConfirmation}
+                    autoComplete='password confirmation'
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  />
+                </InputGroup>
+              </Form.Group>
+              <Form.Group className="d-flex justify-content-end">
+                <Button className="login_btn" variant="primary" type="submit" disabled={!validateForm()}>
+                  Sign up
+                </Button>
+              </Form.Group>
+            </Form>
+          </Card.Body>
+          <Card.Footer>
+            <div className="d-flex justify-content-center links">
+              Already have account?<a href="/login">Sign In</a>
+            </div>
+          </Card.Footer>
+        </Card>
+      </div>
     </div>
   )
 }

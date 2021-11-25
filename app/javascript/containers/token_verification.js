@@ -1,6 +1,5 @@
 import React from 'react'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import { Form, Button, Card } from 'react-bootstrap'
 import SignOutBtn from 'components/sign_out'
 import { API } from '../utils/api'
 
@@ -23,20 +22,30 @@ export default function TokenVerification () {
   }
 
   return (
-    <div className="centered-form">
-      <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="token-verification">
-          <Form.Label>JWT Token</Form.Label>
-          <Form.Control
-            disabled
-            value={getToken()}
-          />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Show my profile!
-        </Button>
-        <SignOutBtn />
-      </Form>
+    <div className="container">
+      <div className="d-flex justify-content-center h-100">
+        <Card>
+          <Card.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="token-verification">
+                <Form.Label>JWT Token</Form.Label>
+                <Form.Control
+                  disabled
+                  value={getToken()}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Button variant="primary" type="submit">
+                  Show my profile!
+                </Button>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <SignOutBtn />
+              </Form.Group>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   )
 }
